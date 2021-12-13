@@ -1,10 +1,10 @@
-@import './variables';
+@import "./variables";
 
 html,
 body {
   padding: 0;
   margin: 0;
-  font-family: 'Roboto', sans-serif;
+  font-family: "Roboto", sans-serif;
 }
 
 a {
@@ -16,15 +16,11 @@ a {
   box-sizing: border-box;
 }
 
-ul, li {
+ul,
+li {
   list-style: none;
 }
 
 #app {
   display: flex;
-}
-
-#content {
-  flex: 1;
-  overflow-y: scroll;
 }

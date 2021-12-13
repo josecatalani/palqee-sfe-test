@@ -1,5 +1,14 @@
 import React from "react";
+import Header from "./Header";
+import styles from "../../styles/Content.module.scss";
 
-export default ({ children }) => {
-  return <div id="content">{children}</div>;
+const Content = ({ children }) => {
+  return (
+    <div className={styles.content}>
+      <Header />
+      {children}
+    </div>
+  );
 };
+
+export default Content;

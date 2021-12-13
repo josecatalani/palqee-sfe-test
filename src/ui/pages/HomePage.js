@@ -1,5 +1,8 @@
 import React from "react";
+import styles from "../../styles/HomePage.module.scss";
 
-export default ({ children }) => {
-  return <div id="home">{children}</div>;
+const HomePage = () => {
+  return <div className={styles.home}>HomePage Content!</div>;
 };
+
+export default HomePage;

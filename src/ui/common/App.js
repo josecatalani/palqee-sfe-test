@@ -2,7 +2,7 @@ import React from "react";
 import Content from "./Content";
 import Sidebar from "./Sidebar";
 
-export default ({ children }) => {
+const App = ({ children }) => {
   return (
     <div id="app">
       <Sidebar />
@@ -10,3 +10,5 @@ export default ({ children }) => {
     </div>
   );
 };
+
+export default App;
