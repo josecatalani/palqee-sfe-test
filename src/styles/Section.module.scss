@@ -1,0 +1,17 @@
+@import "./variables.scss";
+
+.sectionTitle {
+  margin: 0;
+}
+
+.sectionDescription {
+  border-left: 8px solid $blockquote-border;
+  padding: 10px 10px 10px 20px;
+  font-style: italic;
+  margin: 0;
+  background: $blockquote-background;
+
+  p {
+    font-size: 1.2rem;
+  }
+}

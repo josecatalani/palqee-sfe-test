@@ -1,8 +1,12 @@
 @import './variables.scss';
 
 .sidebar {
-  width: 20%;
   background: $sidebar-background;
+
+  ul {
+    padding: 0;
+    margin: 20px;
+  }
 }
 
 .menuItem {

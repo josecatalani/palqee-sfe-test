@@ -1,0 +1,33 @@
+@import "./variables.scss";
+
+.tableWrapper {
+  width: 100%;
+  overflow-x: auto;
+}
+
+.table {
+  border-spacing: 0;
+  border-collapse: collapse;
+  width: 100%;
+
+  th,
+  td {
+    padding: 5px;
+    text-align: center;
+  }
+
+  th {
+    background: $table-head-background;
+  }
+}
+
+.filterInputs {
+  label {
+    margin-right: 10px;
+  }
+}
+
+.tableFooter {
+  display: flex;
+  justify-content: flex-end;
+}

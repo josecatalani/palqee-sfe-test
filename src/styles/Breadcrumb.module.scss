@@ -1,0 +1,27 @@
+@import "./variables.scss";
+
+.breadcrumb {
+  padding: 0 0 10px 0;
+  border-bottom: 1px solid $breadcrumb-separator;
+}
+
+.breadcrumbList {
+  padding: 0;
+}
+
+.breadcrumbItem {
+  display: inline-block;
+
+  &:before {
+    content: "›";
+    display: inline-block;
+    margin: 0 8px;
+  }
+
+  &:first-child {
+    &:before {
+      content: "";
+      display: none;
+    }
+  }
+}

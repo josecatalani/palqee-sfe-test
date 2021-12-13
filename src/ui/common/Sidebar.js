@@ -1,5 +1,6 @@
 import React from "react";
 import Link from "next/link";
+import MenuList from "../../helpers/menu-list";
 import styles from "../../styles/Sidebar.module.scss";
 
 const MenuItem = ({ label, link, children }) => (
@@ -18,33 +19,20 @@ const MenuItem = ({ label, link, children }) => (
 );
 
 const Sidebar = () => {
-  const menuList = [
-    {
-      label: "Home",
-      link: "/",
-    },
-    {
-      label: "StarWars",
-      children: [
-        {
-          label: "Characters",
-          link: "/characters",
-        },
-      ],
-    },
-  ];
-
   return (
     <aside className={styles.sidebar}>
       <ul>
-        {menuList.map((menuItem) => {
+        {MenuList.map((menuItem, idx) => {
           const { children } = menuItem;
           return (
-            <MenuItem {...menuItem}>
+            <MenuItem key={`menu_item_root_${idx}`} {...menuItem}>
               {children ? (
                 <ul>
                   {children.map((childrenItem) => (
-                    <MenuItem {...childrenItem} />
+                    <MenuItem
+                      key={`menu_item_children_${idx}`}
+                      {...childrenItem}
+                    />
                   ))}
                 </ul>
               ) : null}
