@@ -1,0 +1,11 @@
+@import './variables.scss';
+
+.sidebar {
+  width: 20%;
+  background: $sidebar-background;
+}
+
+.menuItem {
+  padding: 10px;
+  display: block;
+}
