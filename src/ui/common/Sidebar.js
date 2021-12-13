@@ -36,21 +36,22 @@ const Sidebar = () => {
 
   return (
     <aside className={styles.sidebar}>
-      {menuList.map((menuItem) => {
-        const { children } = menuItem;
-        if (children) {
+      <ul>
+        {menuList.map((menuItem) => {
+          const { children } = menuItem;
           return (
             <MenuItem {...menuItem}>
-              <ul>
-                {children.map((childrenItem) => (
-                  <MenuItem {...childrenItem} />
-                ))}
-              </ul>
+              {children ? (
+                <ul>
+                  {children.map((childrenItem) => (
+                    <MenuItem {...childrenItem} />
+                  ))}
+                </ul>
+              ) : null}
             </MenuItem>
           );
-        }
-        return <MenuItem {...menuItem} />;
-      })}
+        })}
+      </ul>
     </aside>
   );
 };
