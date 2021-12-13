@@ -1,3 +1,5 @@
+@import './variables';
+
 html,
 body {
   padding: 0;
@@ -13,4 +15,17 @@ a {
 
 * {
   box-sizing: border-box;
+}
+
+#app {
+  display: flex;
+}
+
+#sidebar {
+  width: 20%;
+  background: $sidebar-background;
+}
+
+#content {
+  flex: 1;
 }
