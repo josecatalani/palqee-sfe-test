@@ -20,7 +20,6 @@ const Breadcrumb = ({ characterSlug }) => {
   const [breadcrumbs, setBreadcrumbs] = useState([]);
 
   useEffect(() => {
-    console.log({ router });
     if (router.asPath === "/") return [];
     const dictionary = {
       "": {

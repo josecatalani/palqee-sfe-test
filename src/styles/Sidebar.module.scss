@@ -1,7 +1,8 @@
-@import './variables.scss';
+@import "./variables.scss";
 
 .sidebar {
   background: $sidebar-background;
+  min-width: 20%;
 
   ul {
     padding: 0;
@@ -12,4 +13,32 @@
 .menuItem {
   padding: 10px;
   display: block;
+  cursor: pointer;
+  position: relative;
+
+  &:after {
+    display: block;
+    position: absolute;
+    right: 0;
+    top: 5px;
+    content: "";
+  }
+}
+
+.isMenuItemOpened {
+  &:after {
+    content: "↑";
+  }
+  > ul {
+    display: block;
+  }
+}
+
+.isMenuItemClosed {
+  &:after {
+    content: "↓";
+  }
+  > ul {
+    display: none;
+  }
 }

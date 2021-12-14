@@ -50,6 +50,8 @@ const Table = () => {
     homeWorld: "",
   });
 
+  const [sortingByColumn, setSortingByColumn] = useState({});
+
   if (loading) return <p>Loading...</p>;
   if (error) return <p>Error :(</p>;
 
@@ -62,6 +64,12 @@ const Table = () => {
     setFilter({
       ...filters,
       [name]: value,
+    });
+  };
+
+  const sortByColumn = (column) => {
+    setSortingByColumn({
+      [column]: sortingByColumn[column] === 1 ? -1 : 1,
     });
   };
 
@@ -86,8 +94,26 @@ const Table = () => {
       row.homeWorld.toLowerCase().includes(homeWorld.toLowerCase())
     );
   }
-
   const isFiltering = Object.values(filters).some(Boolean);
+  const isSorting = Object.values(filters).length;
+
+  if (isSorting) {
+    filtered.sort((a, b) => {
+      const column = Object.keys(sortingByColumn)[0];
+      const ordering = sortingByColumn[column];
+      const isAscending = ordering === 1;
+
+      if (a[column] < b[column]) {
+        return isAscending ? -1 : 1;
+      }
+
+      if (a[column] > b[column]) {
+        return isAscending ? 1 : -1;
+      }
+
+      return 0;
+    });
+  }
 
   return (
     <div className={styles.tableWrapper}>
@@ -112,9 +138,27 @@ const Table = () => {
       <table className={styles.table}>
         <thead>
           <tr>
-            {columns.map((column, idx) => (
-              <th key={`table_th_${idx}`}>{column.name}</th>
-            ))}
+            {columns.map((column, idx) => {
+              const isSortingByColumn = Boolean(sortingByColumn[column.key]);
+              const isSortAscending = sortingByColumn[column.key] === 1;
+
+              let sortingOrderingClassName = () => {
+                if (!isSortingByColumn) return "";
+                return isSortAscending
+                  ? styles.thAscending
+                  : styles.thDescending;
+              };
+
+              return (
+                <th
+                  key={`table_th_${idx}`}
+                  onClick={() => sortByColumn(column.key)}
+                  className={sortingOrderingClassName()}
+                >
+                  <div>{column.name}</div>
+                </th>
+              );
+            })}
           </tr>
         </thead>
         <tbody>
@@ -123,7 +167,6 @@ const Table = () => {
               <tr key={`table_tr_${idx}`}>
                 {columns.map((column, idx) => {
                   let columnValue = row[column.key];
-                  console.log({ columnValue });
                   if (column.key === "name") {
                     columnValue = (
                       <Link
@@ -148,6 +191,7 @@ const Table = () => {
         <nav>
           <button
             onClick={() => {
+              setSortingByColumn({});
               refetch({
                 first: undefined,
                 after: undefined,
@@ -159,15 +203,16 @@ const Table = () => {
             Go to Previous page
           </button>
           <button
-            onClick={() =>
+            onClick={() => {
+              setSortingByColumn({});
               fetchMore({
                 variables: {
                   first: rowsPerPage,
                   after: data.allPeople.pageInfo.endCursor,
                   before: undefined,
                 },
-              })
-            }
+              });
+            }}
           >
             Go to Next page
           </button>
@@ -177,6 +222,7 @@ const Table = () => {
             name="rowsPerPage"
             onChange={(e) => {
               const newRowsPerPage = Number(e.target.value);
+              setSortingByColumn({});
               setRowsPerPage(newRowsPerPage);
               refetch({ first: newRowsPerPage });
             }}
