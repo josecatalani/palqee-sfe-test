@@ -1,0 +1,19 @@
+.films {
+  display: flex;
+  flex-wrap: wrap;
+  margin-left: -8px;
+  margin-right: -8px;
+}
+
+.filmItem {
+  flex-basis: 25%;
+
+  padding-left: 8px;
+  padding-right: 8px;
+
+  > div {
+    padding: 0 10px;
+    border-radius: 10px;
+    border: 1px solid black;
+  }
+}

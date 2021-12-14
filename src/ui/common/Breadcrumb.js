@@ -5,9 +5,13 @@ import styles from "../../styles/Breadcrumb.module.scss";
 
 const BreadcrumbItem = ({ label, link }) => (
   <li className={styles.breadcrumbItem}>
-    <Link href={link}>
-      <a>{label}</a>
-    </Link>
+    {link ? (
+      <Link href={link}>
+        <a>{label}</a>
+      </Link>
+    ) : (
+      label
+    )}
   </li>
 );
 
@@ -16,6 +20,7 @@ const Breadcrumb = ({ characterSlug }) => {
   const [breadcrumbs, setBreadcrumbs] = useState([]);
 
   useEffect(() => {
+    console.log({ router });
     if (router.asPath === "/") return [];
     const dictionary = {
       "": {
@@ -28,11 +33,11 @@ const Breadcrumb = ({ characterSlug }) => {
       },
       "[slug]": {
         label: characterSlug || "Character Detail",
-        link: `/characters/${characterSlug}`,
       },
     };
-    const routes = router.asPath.split("/");
-    setBreadcrumbs(routes.map((routeItem) => dictionary[routeItem]));
+    const routes = router.route.split("/");
+    let crumbs = routes.map((routeItem) => dictionary[routeItem]);
+    setBreadcrumbs(crumbs);
   }, []);
 
   if (!breadcrumbs.length) return null;

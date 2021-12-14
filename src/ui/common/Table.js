@@ -89,8 +89,6 @@ const Table = () => {
 
   const isFiltering = Object.values(filters).some(Boolean);
 
-  console.log({ filtered });
-
   return (
     <div className={styles.tableWrapper}>
       <header>
@@ -129,9 +127,9 @@ const Table = () => {
                   if (column.key === "name") {
                     columnValue = (
                       <Link
-                        href={`/characters/${row.id}/${createSlugFromText(
-                          row.name
-                        )}`}
+                        href={`/characters/${createSlugFromText(row.name)}-${
+                          row.id
+                        }`}
                       >
                         <a>{row.name}</a>
                       </Link>

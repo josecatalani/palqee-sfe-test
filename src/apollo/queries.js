@@ -25,4 +25,29 @@ query getAllCharacters ($first: Int, $after: String, $before: String, $last: Int
 }
 `;
 
-export { ALL_CHARACTERS };
+const GET_CHARACTER = gql`
+query getCharacter ($id: ID) {
+  person(id: $id) {
+    id
+    name
+    eyeColor
+    gender
+    hairColor
+    skinColor
+    homeworld {
+      name
+    }
+    filmConnection {
+      films {
+        title
+        episodeID
+        director
+        producers
+        releaseDate
+      }
+    }
+  }
+}
+`
+
+export { ALL_CHARACTERS, GET_CHARACTER };

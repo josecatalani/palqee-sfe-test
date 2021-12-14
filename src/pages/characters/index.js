@@ -1,5 +1,5 @@
 import Head from "next/head";
-import CharactersPage from "../../ui/pages/CharactersPage";
+import CharactersListPage from "../../ui/pages/CharactersListPage";
 
 export default function Characters() {
   return (
@@ -7,7 +7,7 @@ export default function Characters() {
       <Head>
         <title>Characters - StarWars List</title>
       </Head>
-      <CharactersPage />
+      <CharactersListPage />
     </>
   );
 }

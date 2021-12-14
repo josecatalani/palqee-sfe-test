@@ -1,14 +1,14 @@
 @import "./variables.scss";
 
 .sectionTitle {
-  margin: 0;
+  margin: 0 0 2rem 0;
 }
 
 .sectionDescription {
   border-left: 8px solid $blockquote-border;
   padding: 10px 10px 10px 20px;
   font-style: italic;
-  margin: 0;
+  margin: 0 0 2rem 0;
   background: $blockquote-background;
 
   p {
