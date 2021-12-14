@@ -24,8 +24,6 @@ const Sidebar = () => {
   const onChange = (key, value) =>
     setIsOpened({ ...isOpened, ...{ [key]: value } });
 
-  console.log({ isOpened });
-
   return (
     <aside className={styles.sidebar}>
       <ul>

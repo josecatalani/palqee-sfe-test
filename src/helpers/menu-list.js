@@ -4,7 +4,7 @@ const MenuList = [
     link: "/",
   },
   {
-    label: "StarWars",
+    label: "Star Wars",
     children: [
       {
         label: "Characters",
