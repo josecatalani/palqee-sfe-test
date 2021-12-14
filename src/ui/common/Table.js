@@ -1,33 +1,40 @@
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import PropTypes from "prop-types";
+import Link from "next/link";
 import styles from "../../styles/Table.module.scss";
-import { useLazyQuery, useQuery } from "@apollo/client";
+import { useQuery } from "@apollo/client";
 import { ALL_CHARACTERS } from "../../apollo/queries";
+import { createSlugFromText } from "../../helpers/slug";
 
 const columns = [
   {
     name: "Name",
+    key: "name",
   },
   {
     name: "Hair Color",
+    key: "hairColor",
   },
   {
     name: "Skin Color",
+    key: "skinColor",
   },
   {
     name: "Eye Color",
+    key: "eyeColor",
   },
   {
     name: "Gender",
+    key: "gender",
   },
   {
     name: "Home world Name",
+    key: "homeworld.name",
   },
 ];
 
 const Table = () => {
   const [rowsPerPage, setRowsPerPage] = useState(5);
-  console.log({ rowsPerPage });
   const { loading, error, data, fetchMore, refetch } = useQuery(
     ALL_CHARACTERS,
     {
@@ -46,17 +53,7 @@ const Table = () => {
   if (loading) return <p>Loading...</p>;
   if (error) return <p>Error :(</p>;
 
-  const rows = data.allPeople.people.map((peopleItem) => {
-    const {
-      name,
-      hairColor,
-      skinColor,
-      eyeColor,
-      gender,
-      homeworld: { name: homeWorldName },
-    } = peopleItem;
-    return [name, hairColor, skinColor, eyeColor, gender, homeWorldName];
-  });
+  const rows = data.allPeople.people;
 
   const onFilterChange = (e) => {
     e.preventDefault();
@@ -74,23 +71,25 @@ const Table = () => {
 
   if (hairColor) {
     filtered = filtered.filter((row) =>
-      row[1].toLowerCase().includes(hairColor.toLowerCase())
+      row.hairColor.toLowerCase().includes(hairColor.toLowerCase())
     );
   }
 
   if (eyeColor) {
     filtered = filtered.filter((row) =>
-      row[3].toLowerCase().includes(eyeColor.toLowerCase())
+      row.eyeColor.toLowerCase().includes(eyeColor.toLowerCase())
     );
   }
 
   if (homeWorld) {
     filtered = filtered.filter((row) =>
-      row[5].toLowerCase().includes(homeWorld.toLowerCase())
+      row.homeWorld.toLowerCase().includes(homeWorld.toLowerCase())
     );
   }
 
   const isFiltering = Object.values(filters).some(Boolean);
+
+  console.log({ filtered });
 
   return (
     <div className={styles.tableWrapper}>
@@ -124,9 +123,22 @@ const Table = () => {
           {filtered.length ? (
             filtered.map((row, idx) => (
               <tr key={`table_tr_${idx}`}>
-                {row.map((item, idy) => (
-                  <td key={`table_td_${idy}`}>{item}</td>
-                ))}
+                {columns.map((column, idx) => {
+                  let columnValue = row[column.key];
+                  console.log({ columnValue });
+                  if (column.key === "name") {
+                    columnValue = (
+                      <Link
+                        href={`/characters/${row.id}/${createSlugFromText(
+                          row.name
+                        )}`}
+                      >
+                        <a>{row.name}</a>
+                      </Link>
+                    );
+                  }
+                  return <td key={`table_td_${idx}`}>{columnValue}</td>;
+                })}
               </tr>
             ))
           ) : (
