@@ -90,9 +90,11 @@ const Table = () => {
   }
 
   if (homeWorld) {
-    filtered = filtered.filter((row) =>
-      row.homeWorld.toLowerCase().includes(homeWorld.toLowerCase())
-    );
+    filtered = filtered.filter((row) => {
+      return row.homeworld.name
+        .toLowerCase()
+        .includes(homeWorld.toLowerCase());
+    });
   }
   const isFiltering = Object.values(filters).some(Boolean);
   const isSorting = Object.values(filters).length;
@@ -102,12 +104,27 @@ const Table = () => {
       const column = Object.keys(sortingByColumn)[0];
       const ordering = sortingByColumn[column];
       const isAscending = ordering === 1;
+      let elementA = a[column];
+      let elementB = b[column];
 
-      if (a[column] < b[column]) {
+      const isDeepProperty = column && column.includes(".");
+      if (isDeepProperty) {
+        const deepPath = column.split(".");
+        elementA = deepPath.reduce(
+          (acc, curr) => (acc && acc[curr] ? acc[curr] : null),
+          a
+        );
+        elementB = deepPath.reduce(
+          (acc, curr) => (acc && acc[curr] ? acc[curr] : null),
+          b
+        );
+      }
+
+      if (elementA < elementB) {
         return isAscending ? -1 : 1;
       }
 
-      if (a[column] > b[column]) {
+      if (elementA > elementB) {
         return isAscending ? 1 : -1;
       }
 
@@ -167,6 +184,14 @@ const Table = () => {
               <tr key={`table_tr_${idx}`}>
                 {columns.map((column, idx) => {
                   let columnValue = row[column.key];
+                  const isDeepProperty = column.key.includes(".");
+                  if (isDeepProperty) {
+                    const deepPath = column.key.split(".");
+                    columnValue = deepPath.reduce(
+                      (acc, curr) => (acc && acc[curr] ? acc[curr] : null),
+                      row
+                    );
+                  }
                   if (column.key === "name") {
                     columnValue = (
                       <Link
