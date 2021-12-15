@@ -22,10 +22,17 @@
     }
   }
 
+  tr {
+    &:nth-child(odd) {
+      background-color: lighten($blue-1, 75%);
+    }
+  }
+
   th {
     background: $table-head-background;
     cursor: pointer;
     position: relative;
+    color: white;
 
     &:after {
       display: block;
@@ -50,12 +57,24 @@
 }
 
 .filterInputs {
+  margin-bottom: 15px;
+
   label {
-    margin-right: 10px;
+    margin-right: 20px;
+
+    input {
+      margin-left: 10px;
+    }
+  }
+
+  fieldset {
+    border: 0;
   }
 }
 
 .tableFooter {
   display: flex;
   justify-content: flex-end;
+  margin-top: 20px;
+  padding: 10px 0;
 }

@@ -9,6 +9,8 @@ cd src/
 yarn dev
 ```
 
-## Bugs
+## Bug
 
 For some reason, swapi always returns `hasPreviousPage = false`, so our pagination just moves forward. I couldn't find a rapid solution for this. I've removed the logic to hide the `Go to previous page` button to the table to be usable.
+
+There is a ongoing/open issue for this: https://github.com/graphql/graphql-relay-js/issues/58
