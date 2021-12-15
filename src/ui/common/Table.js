@@ -215,7 +215,7 @@ const Table = () => {
       </table>
       <footer className={styles.tableFooter}>
         <nav>
-          {data.allPeople.pageInfo.hasPreviousPage ? (
+          {/* {data.allPeople.pageInfo.hasPreviousPage ? ( */}
             <button
               onClick={() => {
                 setSortingByColumn({});
@@ -231,7 +231,7 @@ const Table = () => {
             >
               Go to Previous page
             </button>
-          ) : null}
+          {/* ) : null} */}
           {data.allPeople.pageInfo.hasNextPage ? (
             <button
               onClick={() => {

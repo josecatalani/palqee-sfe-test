@@ -11,4 +11,4 @@ yarn dev
 
 ## Bugs
 
-For some reason, swapi always returns `hasPreviousPage = false`, so our pagination just move forward. I couldn't find a solution for this, but the codebase is prepare to handle the right response for `hasPreviousPage`
+For some reason, swapi always returns `hasPreviousPage = false`, so our pagination just moves forward. I couldn't find a rapid solution for this. I've removed the logic to hide the `Go to previous page` button to the table to be usable.
