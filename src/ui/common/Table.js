@@ -40,6 +40,9 @@ const Table = () => {
     {
       variables: {
         first: rowsPerPage,
+        last: null,
+        after: null,
+        before: null,
       },
     }
   );
@@ -55,7 +58,7 @@ const Table = () => {
   if (loading) return <p>Loading...</p>;
   if (error) return <p>Error :(</p>;
 
-  const rows = data.allPeople.people;
+  const rows = data.allPeople.edges.map((edge) => edge.node);
 
   const onFilterChange = (e) => {
     e.preventDefault();
@@ -91,9 +94,7 @@ const Table = () => {
 
   if (homeWorld) {
     filtered = filtered.filter((row) => {
-      return row.homeworld.name
-        .toLowerCase()
-        .includes(homeWorld.toLowerCase());
+      return row.homeworld.name.toLowerCase().includes(homeWorld.toLowerCase());
     });
   }
   const isFiltering = Object.values(filters).some(Boolean);
@@ -214,33 +215,40 @@ const Table = () => {
       </table>
       <footer className={styles.tableFooter}>
         <nav>
-          <button
-            onClick={() => {
-              setSortingByColumn({});
-              refetch({
-                first: undefined,
-                after: undefined,
-                last: rowsPerPage,
-                before: data.allPeople.pageInfo.startCursor,
-              });
-            }}
-          >
-            Go to Previous page
-          </button>
-          <button
-            onClick={() => {
-              setSortingByColumn({});
-              fetchMore({
-                variables: {
-                  first: rowsPerPage,
-                  after: data.allPeople.pageInfo.endCursor,
-                  before: undefined,
-                },
-              });
-            }}
-          >
-            Go to Next page
-          </button>
+          {data.allPeople.pageInfo.hasPreviousPage ? (
+            <button
+              onClick={() => {
+                setSortingByColumn({});
+                fetchMore({
+                  variables: {
+                    first: null,
+                    after: null,
+                    last: rowsPerPage,
+                    before: data.allPeople.pageInfo.startCursor || null,
+                  },
+                });
+              }}
+            >
+              Go to Previous page
+            </button>
+          ) : null}
+          {data.allPeople.pageInfo.hasNextPage ? (
+            <button
+              onClick={() => {
+                setSortingByColumn({});
+                fetchMore({
+                  variables: {
+                    first: rowsPerPage,
+                    after: data.allPeople.pageInfo.endCursor,
+                    last: null,
+                    before: null,
+                  },
+                });
+              }}
+            >
+              Go to Next page
+            </button>
+          ) : null}
         </nav>
         <div>
           <select

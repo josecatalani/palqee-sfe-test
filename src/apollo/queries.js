@@ -1,24 +1,26 @@
 import { gql } from "@apollo/client";
 
 const ALL_CHARACTERS = gql`
-query getAllCharacters ($first: Int, $after: String, $before: String, $last: Int) {
-  allPeople (first: $first, after: $after, before: $before, last: $last) {
+query getAllCharacters ($first: Int, $last: Int, $after: String, $before: String) {
+  allPeople (first: $first, last: $last, after: $after, before: $before) {
     pageInfo {
       hasNextPage
       hasPreviousPage
       startCursor
       endCursor
     }
-    totalCount
-    people {
-      id
-      name
-      eyeColor
-      gender
-      hairColor
-      skinColor
-      homeworld {
+    edges {
+      cursor
+      node {
+        id
         name
+        eyeColor
+        gender
+        hairColor
+        skinColor
+        homeworld {
+          name
+        }
       }
     }
   }
