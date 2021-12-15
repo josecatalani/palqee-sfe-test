@@ -31,15 +31,21 @@ const Sidebar = () => {
           const { children } = menuItem;
           const key = menuItem.label.toLowerCase();
           const value = Boolean(isOpened[key]);
+          let rootMenuClass = "";
+
+          if (children) {
+            rootMenuClass = value
+              ? styles.isMenuItemOpened
+              : styles.isMenuItemClosed;
+          }
+
           return (
             <MenuItem
               key={`menu_item_root_${idx}`}
               onClick={() => {
                 children && onChange(key, !value);
               }}
-              className={`${styles.menuItem} ${
-                value ? styles.isMenuItemOpened : styles.isMenuItemClosed
-              }`}
+              className={`${styles.menuItem} ${rootMenuClass}`}
               {...menuItem}
             >
               {children ? (
